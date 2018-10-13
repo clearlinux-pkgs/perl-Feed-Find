@@ -4,24 +4,15 @@
 #
 Name     : perl-Feed-Find
 Version  : 0.07
-Release  : 2
+Release  : 3
 URL      : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libx/libxml-feed-perl/libxml-feed-perl_0.53+dfsg-1.debian.tar.xz
 Summary  : 'Syndication feed auto-discovery'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
-Requires: perl-Feed-Find-license
-Requires: perl-Feed-Find-man
-Requires: perl(Class::ErrorHandler)
-Requires: perl(Encode::Locale)
-Requires: perl(HTML::Parser)
-Requires: perl(HTTP::Date)
-Requires: perl(HTTP::Request)
-Requires: perl(LWP)
-Requires: perl(Module::Install)
-Requires: perl(Try::Tiny)
-Requires: perl(URI)
+Requires: perl-Feed-Find-license = %{version}-%{release}
+BuildRequires : buildreq-cpan
 BuildRequires : perl(Class::ErrorHandler)
 BuildRequires : perl(Encode::Locale)
 BuildRequires : perl(HTML::Parser)
@@ -39,6 +30,15 @@ SYNOPSIS
 use Feed::Find;
 my @feeds = Feed::Find->find('http://example.com/');
 
+%package dev
+Summary: dev components for the perl-Feed-Find package.
+Group: Development
+Provides: perl-Feed-Find-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-Feed-Find package.
+
+
 %package license
 Summary: license components for the perl-Feed-Find package.
 Group: Default
@@ -47,19 +47,11 @@ Group: Default
 license components for the perl-Feed-Find package.
 
 
-%package man
-Summary: man components for the perl-Feed-Find package.
-Group: Default
-
-%description man
-man components for the perl-Feed-Find package.
-
-
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n Feed-Find-0.07
-mkdir -p %{_topdir}/BUILD/Feed-Find-0.07/deblicense/
+cd ..
+%setup -q -T -D -n Feed-Find-0.07 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Feed-Find-0.07/deblicense/
 
 %build
@@ -84,12 +76,12 @@ make TEST_VERBOSE=1 test || :
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-Feed-Find
-cp deblicense/copyright %{buildroot}/usr/share/doc/perl-Feed-Find/deblicense_copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Feed-Find
+cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Feed-Find/deblicense_copyright
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -98,12 +90,12 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/Feed/Find.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Feed/Find.pm
 
-%files license
-%defattr(-,root,root,-)
-/usr/share/doc/perl-Feed-Find/deblicense_copyright
-
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Feed::Find.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Feed-Find/deblicense_copyright

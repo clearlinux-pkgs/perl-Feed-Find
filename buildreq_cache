@@ -1,0 +1,10 @@
+0.07
+perl(Class::ErrorHandler)
+perl(Encode::Locale)
+perl(HTML::Parser)
+perl(HTTP::Date)
+perl(HTTP::Request)
+perl(LWP)
+perl(Module::Install)
+perl(Try::Tiny)
+perl(URI)
