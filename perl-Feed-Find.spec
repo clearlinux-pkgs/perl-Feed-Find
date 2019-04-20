@@ -4,7 +4,7 @@
 #
 Name     : perl-Feed-Find
 Version  : 0.07
-Release  : 9
+Release  : 10
 URL      : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libx/libxml-feed-perl/libxml-feed-perl_0.53+dfsg-1.debian.tar.xz
