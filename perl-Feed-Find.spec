@@ -4,7 +4,7 @@
 #
 Name     : perl-Feed-Find
 Version  : 0.07
-Release  : 11
+Release  : 12
 URL      : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libx/libxml-feed-perl/libxml-feed-perl_0.53+dfsg-1.debian.tar.xz
@@ -12,6 +12,7 @@ Summary  : 'Syndication feed auto-discovery'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-Feed-Find-license = %{version}-%{release}
+Requires: perl-Feed-Find-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : perl(Class::ErrorHandler)
 BuildRequires : perl(Encode::Locale)
@@ -34,6 +35,7 @@ my @feeds = Feed::Find->find('http://example.com/');
 Summary: dev components for the perl-Feed-Find package.
 Group: Development
 Provides: perl-Feed-Find-devel = %{version}-%{release}
+Requires: perl-Feed-Find = %{version}-%{release}
 
 %description dev
 dev components for the perl-Feed-Find package.
@@ -47,18 +49,28 @@ Group: Default
 license components for the perl-Feed-Find package.
 
 
+%package perl
+Summary: perl components for the perl-Feed-Find package.
+Group: Default
+Requires: perl-Feed-Find = %{version}-%{release}
+
+%description perl
+perl components for the perl-Feed-Find package.
+
+
 %prep
 %setup -q -n Feed-Find-0.07
-cd ..
-%setup -q -T -D -n Feed-Find-0.07 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libxml-feed-perl_0.53+dfsg-1.debian.tar.xz
+cd %{_builddir}/Feed-Find-0.07
 mkdir -p deblicense/
-mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Feed-Find-0.07/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/Feed-Find-0.07/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -68,7 +80,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -77,7 +89,7 @@ make TEST_VERBOSE=1 test || :
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Feed-Find
-cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Feed-Find/deblicense_copyright
+cp %{_builddir}/Feed-Find-0.07/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Feed-Find/808cdef4c992763637fe5a5a7551c6cd5186080b
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -90,7 +102,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Feed/Find.pm
 
 %files dev
 %defattr(-,root,root,-)
@@ -98,4 +109,8 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-Feed-Find/deblicense_copyright
+/usr/share/package-licenses/perl-Feed-Find/808cdef4c992763637fe5a5a7551c6cd5186080b
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Feed/Find.pm
