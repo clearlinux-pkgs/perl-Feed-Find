@@ -4,7 +4,7 @@
 #
 Name     : perl-Feed-Find
 Version  : 0.07
-Release  : 13
+Release  : 14
 URL      : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/B/BT/BTROTT/Feed-Find-0.07.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libx/libxml-feed-perl/libxml-feed-perl_0.53+dfsg-1.debian.tar.xz
@@ -113,4 +113,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.2/Feed/Find.pm
+/usr/lib/perl5/vendor_perl/5.30.3/Feed/Find.pm
