@@ -1,7 +1,10 @@
-0.09
+0.10
+perl(B::Hooks::EndOfScope)
 perl(Class::ErrorHandler)
 perl(Encode::Locale)
 perl(HTML::Parser)
 perl(LWP)
 perl(Module::Install)
+perl(Package::Stash)
+perl(Test::LWP::UserAgent)
 perl(URI)
