@@ -1,4 +1,4 @@
-0.12
+0.13
 perl(B::Hooks::EndOfScope)
 perl(Class::ErrorHandler)
 perl(Encode::Locale)
