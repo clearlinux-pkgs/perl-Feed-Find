@@ -4,7 +4,7 @@
 #
 Name     : perl-Feed-Find
 Version  : 0.13
-Release  : 27
+Release  : 28
 URL      : https://cpan.metacpan.org/authors/id/D/DA/DAVECROSS/Feed-Find-0.13.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/D/DA/DAVECROSS/Feed-Find-0.13.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libx/libxml-feed-perl/libxml-feed-perl_0.53+dfsg-1.debian.tar.xz
